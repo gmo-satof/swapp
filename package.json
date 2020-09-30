@@ -23,6 +23,7 @@
     "@types/react": "~16.9.49",
     "@types/react-dom": "~16.9.8",
     "@types/react-native": "~0.63.20",
+    "apollo": "^2.31.0",
     "typescript": "~3.8.3"
   },
   "scripts": {
@@ -30,7 +31,10 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "type-check": "tsc",
+    "apollo:download-schema": "apollo client:download-schema",
+    "apollo:codegen": "apollo client:codegen --target=typescript --localSchemaFile=schema.json"
   },
   "private": true
 }

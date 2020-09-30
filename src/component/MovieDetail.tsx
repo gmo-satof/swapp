@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView } from 'react-native';
 import { Card, Paragraph, Avatar, Button, Text } from 'react-native-paper';
 import { gql, useQuery } from '@apollo/client';
+import { StackScreenProps } from '@react-navigation/stack';
 
 const FETCH_MOVIE = gql`
 query fetchMovie($movieId: ID!){
@@ -15,12 +16,16 @@ query fetchMovie($movieId: ID!){
 }
 `;
 
-const LeftContent = props => <Avatar.Icon {...props} icon="movie-open-outline" />
+type StackParamList = {
+  Home: undefined;
+  Movie: {movieId: String}
+};
 
-export default function MovieDetail({ navigation, route }) {
+const LeftContent = (props: {size: number}) => <Avatar.Icon {...props} icon="movie-open-outline" />
+
+export default function MovieDetail({ route, navigation }: StackScreenProps<StackParamList, 'Movie'>) {
 
   const { movieId } = route.params;
-  console.log(movieId);
   const { loading, error, data } = useQuery(FETCH_MOVIE, {variables: { movieId },});
 
   if (loading) {
