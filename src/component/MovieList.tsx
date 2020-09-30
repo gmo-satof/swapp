@@ -1,51 +1,32 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { List } from 'react-native-paper';
+import { List, Text } from 'react-native-paper';
+import { gql, useQuery } from '@apollo/client';
 
-const data = {
-  "allFilms": {
-    "edges": [
-      {
-        "node": {
-          "id": "ZmlsbXM6MQ==",
-          "title": "A New Hope"
-        }
-      },
-      {
-        "node": {
-          "id": "ZmlsbXM6Mg==",
-          "title": "The Empire Strikes Back"
-        }
-      },
-      {
-        "node": {
-          "id": "ZmlsbXM6Mw==",
-          "title": "Return of the Jedi"
-        }
-      },
-      {
-        "node": {
-          "id": "ZmlsbXM6NA==",
-          "title": "The Phantom Menace"
-        }
-      },
-      {
-        "node": {
-          "id": "ZmlsbXM6NQ==",
-          "title": "Attack of the Clones"
-        }
-      },
-      {
-        "node": {
-          "id": "ZmlsbXM6Ng==",
-          "title": "Revenge of the Sith"
-        }
+const FETCH_ALL_MOVIES = gql`
+query fetchAllMovies{
+  allFilms {
+    edges {
+      node {
+        id
+        title
       }
-    ]
+    }
   }
-};
+}
+`;
 
 export default function MovieList({ navigation }) {
+  const { loading, error, data } = useQuery(FETCH_ALL_MOVIES);
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (error) {
+    return <Text>Error :(</Text>;
+  }
+
   return (
     <ScrollView>
       {data.allFilms.edges.map(
@@ -53,7 +34,7 @@ export default function MovieList({ navigation }) {
               <List.Item
                   key={edge.node.id}
                   title={edge.node.title}
-                  onPress={() => navigation.navigate('Movie')}
+                  onPress={() => navigation.navigate('Movie', {movieId: edge.node.id})}
                   right={props => <List.Icon {...props} icon="chevron-right" />}
               />
           )

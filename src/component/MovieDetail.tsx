@@ -1,20 +1,36 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { Card, Paragraph, Avatar, Button } from 'react-native-paper';
+import { Card, Paragraph, Avatar, Button, Text } from 'react-native-paper';
+import { gql, useQuery } from '@apollo/client';
 
-const data = {
-  "film": {
-    "title": "A New Hope",
-    "episodeID": 4,
-    "openingCrawl": "It is a period of civil war.\r\nRebel spaceships, striking\r\nfrom a hidden base, have won\r\ntheir first victory against\r\nthe evil Galactic Empire.\r\n\r\nDuring the battle, Rebel\r\nspies managed to steal secret\r\nplans to the Empire's\r\nultimate weapon, the DEATH\r\nSTAR, an armored space\r\nstation with enough power\r\nto destroy an entire planet.\r\n\r\nPursued by the Empire's\r\nsinister agents, Princess\r\nLeia races home aboard her\r\nstarship, custodian of the\r\nstolen plans that can save her\r\npeople and restore\r\nfreedom to the galaxy....",
-    "director": "George Lucas",
-    "releaseDate": "1977-05-25"
-  }
+const FETCH_MOVIE = gql`
+query fetchMovie($movieId: ID!){
+  film(id: $movieId) {
+    title
+    episodeID
+    openingCrawl
+    director
+    releaseDate
+	}
 }
+`;
 
 const LeftContent = props => <Avatar.Icon {...props} icon="movie-open-outline" />
 
-export default function MovieDetail({ navigation }) {
+export default function MovieDetail({ navigation, route }) {
+
+  const { movieId } = route.params;
+  console.log(movieId);
+  const { loading, error, data } = useQuery(FETCH_MOVIE, {variables: { movieId },});
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (error) {
+    return <Text>Error :(</Text>;
+  }
+
   return (
     <ScrollView>
       <Card style={{margin: 4}}>
