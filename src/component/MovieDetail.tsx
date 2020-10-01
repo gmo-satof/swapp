@@ -21,8 +21,6 @@ type StackParamList = {
   Movie: {movieId: String}
 };
 
-const LeftContent = (props: {size: number}) => <Avatar.Icon {...props} icon="movie-open-outline" />
-
 export default function MovieDetail({ route, navigation }: StackScreenProps<StackParamList, 'Movie'>) {
 
   const { movieId } = route.params;
@@ -39,7 +37,10 @@ export default function MovieDetail({ route, navigation }: StackScreenProps<Stac
   return (
     <ScrollView>
       <Card style={{margin: 4}}>
-        <Card.Title title={data.film.title} subtitle={`episode ${data.film.episodeID} / ${data.film.director}`} left={LeftContent} />
+        <Card.Title 
+          title={data.film.title} 
+          subtitle={`episode ${data.film.episodeID} / ${data.film.director}`} 
+          left={(props) => (<Avatar.Icon {...props} icon="movie-open-outline" />)} />
         <Card.Content>
           <Paragraph>{data.film.openingCrawl}</Paragraph>
         </Card.Content>

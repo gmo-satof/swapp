@@ -8,6 +8,7 @@
     "@react-navigation/stack": "^5.9.2",
     "expo": "~39.0.0",
     "graphql": "^15.3.0",
+    "koa": "^2.13.0",
     "react": "~16.13.0",
     "react-dom": "~16.13.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.2.tar.gz",
@@ -20,10 +21,15 @@
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
+    "@babel/node": "^7.10.5",
+    "@types/koa": "^2.11.4",
     "@types/react": "~16.9.49",
     "@types/react-dom": "~16.9.8",
     "@types/react-native": "~0.63.20",
     "apollo": "^2.31.0",
+    "cross-fetch": "^3.0.6",
+    "mock-require-assets": "^0.0.1",
+    "nodemon": "^2.0.4",
     "typescript": "~3.8.3"
   },
   "scripts": {
@@ -34,7 +40,8 @@
     "eject": "expo eject",
     "type-check": "tsc",
     "apollo:download-schema": "apollo client:download-schema",
-    "apollo:codegen": "apollo client:codegen --target=typescript --localSchemaFile=schema.json"
+    "apollo:codegen": "apollo client:codegen --target=typescript --localSchemaFile=schema.json",
+    "server": "nodemon -e '.js,.ts,.tsx' --exec \"babel-node -i '/node_modules[/\\](?react-native)/' -x '.web.tsx,.web.ts,.web.js,.tsx,.ts,.js' --config-file ./server/babel.config.js server\""
   },
   "private": true
 }

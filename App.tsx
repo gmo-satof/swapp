@@ -2,7 +2,8 @@ import React from 'react';
 import { Provider as PaperProvider,} from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { ApolloProvider, ApolloClient, InMemoryCache　} from '@apollo/client';
+import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink　} from '@apollo/client';
+import fetch from 'cross-fetch';
 
 import MovieList from './src/component/MovieList';
 import MovieDetail from './src/component/MovieDetail';
@@ -10,7 +11,7 @@ import MovieDetail from './src/component/MovieDetail';
 const Stack = createStackNavigator();
 
 const client = new ApolloClient({
-  uri: 'http://localhost:8080',
+  link: new HttpLink({uri: 'http://localhost:8080', fetch }),
   cache: new InMemoryCache()
 });
 
