@@ -1,12 +1,13 @@
 import React from 'react';
 import { Provider as PaperProvider,} from 'react-native-paper';
-import { NavigationContainer, useLinking } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink　} from '@apollo/client';
 import fetch from 'cross-fetch';
 
 import MovieList from './src/component/MovieList';
 import MovieDetail from './src/component/MovieDetail';
+import NotFound from './src/component/NotFound';
 
 const Stack = createStackNavigator();
 
@@ -15,28 +16,35 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-const config = {
-  Home: "",
-  Movie: {
-    path: "movie/:id",
-    stringify: {
-      id: (id: string) => Buffer.from(id, 'base64').toString().replace(/^films:/, ''),
+const linking = {
+  prefixes: ['http://localhost:19006', 'swapp://'],
+  config: {
+    screens: {
+      Home: "",
+      Movie: {
+        path: "movie/:id",
+        parse: {
+          id: (id: string) => Buffer.from(`films:${id}`).toString('base64'),
+        },
+        stringify: {
+          id: (id: string) => Buffer.from(id, 'base64').toString().replace(/^films:/, ''),
+        },
+      },
+      NotFound: ":path"
     },
-  }
+  },
 };
 
 export default function App() {
 
-  const ref = React.useRef();
-  useLinking(ref, { config });
-
   return (
     <ApolloProvider client={client}>
       <PaperProvider>
-        <NavigationContainer ref={ref}>
+        <NavigationContainer linking={linking}>
           <Stack.Navigator>
             <Stack.Screen name="Home" component={MovieList} options={{ title: 'Star Wars Movies' }}/>
             <Stack.Screen name="Movie" component={MovieDetail} options={{ title: 'Movie Detail' }}/>
+            <Stack.Screen name="NotFound" component={NotFound} options={{ title: 'Star Wars Movies' }}/>
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>

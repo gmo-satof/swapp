@@ -1,23 +1,27 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Text, Button } from 'react-native-paper';
-import { StackScreenProps } from '@react-navigation/stack';
+import { Text } from 'react-native-paper';
+import { Link } from '@react-navigation/native';
+
+import StatusCodeContext from '../StatusCodeContext';
 
 type StackParamList = {
   Home: undefined;
 };
 
-export default function NotFound({ navigation }: StackScreenProps<StackParamList>) {
+export default function NotFound() {
+  const status = React.useContext(StatusCodeContext);
+
+  if (status) {
+    status.code = 404;
+  }
+
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.title}>404 Not Found</Text>
-      <Button
-        mode="contained"
-        onPress={() => navigation.navigate('Home')}
-        style={styles.button}
-      >
+      <Link to='/' style={styles.link}>
         Go to home
-      </Button>
+      </Link>
     </View>
   );
 }
@@ -32,7 +36,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 8,
   },
-  button: {
+  link: {
     margin: 24,
   },
 });

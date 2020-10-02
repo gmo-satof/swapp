@@ -6,6 +6,7 @@ import ReactDOMServer from 'react-dom/server';
 import { AppRegistry } from 'react-native-web';
 import { ServerContainer, ServerContainerRef } from '@react-navigation/native';
 import App from '../App';
+import StatusCodeContext from '../src/StatusCodeContext';
 
 AppRegistry.registerComponent('App', () => App);
 
@@ -18,13 +19,17 @@ app.use(async (ctx) => {
 
   const ref = React.createRef<ServerContainerRef>();
 
+  const status = { code: 200 };
+
   const html = ReactDOMServer.renderToString(
-    <ServerContainer
-      ref={ref}
-      location={{ pathname: ctx.path, search: ctx.search }}
-    >
-      {element}
-    </ServerContainer>
+    <StatusCodeContext.Provider value={status}>
+      <ServerContainer
+        ref={ref}
+        location={{ pathname: ctx.path, search: ctx.search }}
+      >
+        {element}
+      </ServerContainer>
+    </StatusCodeContext.Provider>
   );
 
   const css = ReactDOMServer.renderToStaticMarkup(getStyleElement());
@@ -47,6 +52,8 @@ app.use(async (ctx) => {
 `;
 
   ctx.body = document;
+
+  ctx.status = status.code;
 });
 
 app.listen(PORT, () => {

@@ -3,6 +3,9 @@ import { ScrollView } from 'react-native';
 import { Card, Paragraph, Avatar, Button, Text } from 'react-native-paper';
 import { gql, useQuery } from '@apollo/client';
 import { StackScreenProps } from '@react-navigation/stack';
+import { Link } from '@react-navigation/native';
+
+import NotFound from './NotFound';
 
 const FETCH_MOVIE = gql`
 query fetchMovie($id: ID!){
@@ -21,7 +24,7 @@ type StackParamList = {
   Movie: {id: String}
 };
 
-export default function MovieDetail({ route, navigation }: StackScreenProps<StackParamList, 'Movie'>) {
+export default function MovieDetail({ route }: StackScreenProps<StackParamList, 'Movie'>) {
 
   const { id } = route.params;
   const { loading, error, data } = useQuery(FETCH_MOVIE, {variables: { id }});
@@ -31,7 +34,7 @@ export default function MovieDetail({ route, navigation }: StackScreenProps<Stac
   }
 
   if (error) {
-    return <Text>Error :(</Text>;
+    return <NotFound />;
   }
 
   return (
@@ -40,12 +43,12 @@ export default function MovieDetail({ route, navigation }: StackScreenProps<Stac
         <Card.Title 
           title={data.film.title} 
           subtitle={`episode ${data.film.episodeID} / ${data.film.director}`} 
-          left={(props) => <Avatar.Icon {...props} icon="movie-open-outline" />} />
+          left={(props) => <Avatar.Icon {...props} icon='movie-open-outline' />} />
         <Card.Content>
           <Paragraph>{data.film.openingCrawl}</Paragraph>
         </Card.Content>
         <Card.Actions>
-          <Button onPress={() => navigation.navigate('Home')}>Back</Button>
+          <Link to='/'>Back</Link>
         </Card.Actions>
       </Card>
     </ScrollView>
