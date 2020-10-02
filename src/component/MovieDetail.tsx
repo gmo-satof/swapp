@@ -5,8 +5,8 @@ import { gql, useQuery } from '@apollo/client';
 import { StackScreenProps } from '@react-navigation/stack';
 
 const FETCH_MOVIE = gql`
-query fetchMovie($movieId: ID!){
-  film(id: $movieId) {
+query fetchMovie($id: ID!){
+  film(id: $id) {
     title
     episodeID
     openingCrawl
@@ -18,13 +18,13 @@ query fetchMovie($movieId: ID!){
 
 type StackParamList = {
   Home: undefined;
-  Movie: {movieId: String}
+  Movie: {id: String}
 };
 
 export default function MovieDetail({ route, navigation }: StackScreenProps<StackParamList, 'Movie'>) {
 
-  const { movieId } = route.params;
-  const { loading, error, data } = useQuery(FETCH_MOVIE, {variables: { movieId },});
+  const { id } = route.params;
+  const { loading, error, data } = useQuery(FETCH_MOVIE, {variables: { id }});
 
   if (loading) {
     return <Text>Loading...</Text>;
@@ -40,7 +40,7 @@ export default function MovieDetail({ route, navigation }: StackScreenProps<Stac
         <Card.Title 
           title={data.film.title} 
           subtitle={`episode ${data.film.episodeID} / ${data.film.director}`} 
-          left={(props) => (<Avatar.Icon {...props} icon="movie-open-outline" />)} />
+          left={(props) => <Avatar.Icon {...props} icon="movie-open-outline" />} />
         <Card.Content>
           <Paragraph>{data.film.openingCrawl}</Paragraph>
         </Card.Content>

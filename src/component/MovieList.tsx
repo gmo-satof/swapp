@@ -22,7 +22,7 @@ query fetchAllMovies{
 
 type StackParamList = {
   Home: undefined;
-  Movie: {movieId: String};
+  Movie: {id: String};
 };
 
 export default function MovieList({ navigation }: StackScreenProps<StackParamList>) {
@@ -44,7 +44,7 @@ export default function MovieList({ navigation }: StackScreenProps<StackParamLis
               <List.Item
                   key={edge.node.id}
                   title={edge.node.title}
-                  onPress={() => navigation.navigate('Movie', {movieId: edge.node.id})}
+                  onPress={() => navigation.navigate('Movie', {id: edge.node.id})}
                   right={props => <List.Icon {...props} icon="chevron-right" />}
               />
             )
