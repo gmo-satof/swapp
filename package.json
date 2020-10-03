@@ -6,17 +6,20 @@
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/native": "^5.7.5",
     "@react-navigation/stack": "^5.9.2",
+    "cross-fetch": "^3.0.6",
     "expo": "~39.0.0",
     "graphql": "^15.3.0",
     "koa": "^2.13.0",
     "react": "~16.13.0",
     "react-dom": "~16.13.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.2.tar.gz",
+    "react-native-base64": "^0.1.0",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-paper": "^4.2.0",
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
+    "react-native-vector-icons": "^7.1.0",
     "react-native-web": "0.13.13"
   },
   "devDependencies": {
@@ -27,9 +30,9 @@
     "@types/react-dom": "~16.9.8",
     "@types/react-native": "~0.63.20",
     "apollo": "^2.31.0",
-    "cross-fetch": "^3.0.6",
     "mock-require-assets": "^0.0.1",
     "nodemon": "^2.0.4",
+    "react-devtools": "^4.8.2",
     "typescript": "~3.8.3"
   },
   "scripts": {

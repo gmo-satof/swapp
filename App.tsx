@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ApolloProvider, ApolloClient, InMemoryCache, HttpLink　} from '@apollo/client';
 import fetch from 'cross-fetch';
+import base64 from 'react-native-base64';
 
 import MovieList from './src/component/MovieList';
 import MovieDetail from './src/component/MovieDetail';
@@ -24,10 +25,10 @@ const linking = {
       Movie: {
         path: "movie/:id",
         parse: {
-          id: (id: string) => Buffer.from(`films:${id}`).toString('base64'),
+          id: (id: string) => base64.encode(`films:${id}`),
         },
         stringify: {
-          id: (id: string) => Buffer.from(id, 'base64').toString().replace(/^films:/, ''),
+          id: (id: string) => base64.decode(id).replace(/^films:/, ''),
         },
       },
       NotFound: ":path"
@@ -36,7 +37,6 @@ const linking = {
 };
 
 export default function App() {
-
   return (
     <ApolloProvider client={client}>
       <PaperProvider>
