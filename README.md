@@ -1,4 +1,4 @@
-# [SWAPP]
+# SWAPP
 
 SWAPP is a sample project for developing apps using [Expo](https://expo.io/).
 
