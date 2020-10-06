@@ -6,7 +6,7 @@ See https://recruit.gmo.jp/engineer/jisedai/blog/expo-web/
 
 ## 🚀How to use
 
-#### Setting up the Srar Wars API GraphQL server
+### Setting up the Srar Wars API GraphQL server
 
 ```sh
 git clone --depth 1 https://github.com/graphql/swapi-graphql.git
